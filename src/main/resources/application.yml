@@ -3,6 +3,9 @@ spring:
     group:
       local: "h2"
       mysql: "mysql"
+  batch:
+    job:
+      name: ${job.name:NONE}
 
 ---
 

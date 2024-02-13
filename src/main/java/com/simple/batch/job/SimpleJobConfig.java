@@ -1,5 +1,7 @@
 package com.simple.batch.job;
 
+import com.simple.batch.task.SimpleJobTasklet;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,7 +17,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class SimpleJobConfig {
+
+    private final SimpleJobTasklet tasklet;
 
     @Bean
     public Job simpleJob(JobRepository jobRepository, Step simpleStep1, Step simpleStep2) {
@@ -40,14 +45,9 @@ public class SimpleJobConfig {
 
     @Bean
     @JobScope
-    public Step simpleStep2(JobRepository jobRepository, PlatformTransactionManager transactionManager,
-                            @Value("#{jobParameters[requestDate]}") String requestDate) {
+    public Step simpleStep2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("simpleStep2", jobRepository)
-                .tasklet((contribution, chunkContext) -> {
-                    log.info(">>>>>> This is Step2");
-                    log.info(">>>>>> name = {}", requestDate);
-                    return RepeatStatus.FINISHED;
-                }, transactionManager)
+                .tasklet(tasklet, transactionManager)
                 .build();
     }
 
