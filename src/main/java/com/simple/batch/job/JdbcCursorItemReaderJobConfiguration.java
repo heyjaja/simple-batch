@@ -1,7 +1,6 @@
 package com.simple.batch.job;
 
 import com.simple.batch.domain.Pay;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -19,10 +18,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Slf4j
-@RequiredArgsConstructor
 @Configuration
 public class JdbcCursorItemReaderJobConfiguration {
-    private final DataSource dataSource;
 
     private static final int chunkSize = 10;
 
@@ -53,7 +50,7 @@ public class JdbcCursorItemReaderJobConfiguration {
     }
 
     @Bean
-    public JdbcCursorItemReader<Pay> jdbcCursorItemReader() {
+    public JdbcCursorItemReader<Pay> jdbcCursorItemReader(DataSource dataSource) {
         return new JdbcCursorItemReaderBuilder<Pay>()
                 .fetchSize(chunkSize)
                 .dataSource(dataSource)
