@@ -7,6 +7,12 @@ spring:
     job:
       name: ${job.name:NONE}
 
+logging:
+  level:
+    org:
+      springframework:
+        batch: DEBUG
+
 ---
 
 spring:
