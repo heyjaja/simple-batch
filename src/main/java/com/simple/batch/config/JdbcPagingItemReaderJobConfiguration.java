@@ -1,4 +1,4 @@
-package com.simple.batch.job;
+package com.simple.batch.config;
 
 import com.simple.batch.domain.Pay;
 import lombok.extern.slf4j.Slf4j;

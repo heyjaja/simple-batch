@@ -1,4 +1,4 @@
-package com.simple.batch.job;
+package com.simple.batch.config;
 
 import com.simple.batch.task.SimpleJobTasklet;
 import lombok.RequiredArgsConstructor;
